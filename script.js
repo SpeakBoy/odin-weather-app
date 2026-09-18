@@ -1,5 +1,15 @@
 const API_KEY = "T4GJRJL4DW4FV6R2L5GK9CERE";
 
+class Forecast {
+    constructor(address, currentTemp, conditions, tempHi, tempLo) {
+        this.address = address;
+        this.currentTemp = currentTemp;
+        this.conditions = conditions;
+        this.tempHi = tempHi;
+        this.tempLo = tempLo;
+    }
+}
+
 async function fetchWeatherData(location) {
     try {
         const request = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${API_KEY}`;
@@ -14,4 +24,14 @@ async function fetchWeatherData(location) {
     catch (error) {
         console.log(`HTTP error occurred: ${error.message}`);
     }
+}
+
+function processWeatherData(data) {
+    const address = data.address;
+    const currentTemp = data.currentConditions.temp;
+    const conditions = data.currentConditions.conditions;
+    const tempHi = data.days[0].tempmax;
+    const tempLo = data.days[0].tempmin;
+
+    return new Forecast(address, currentTemp, conditions, tempHi, tempLo);
 }
