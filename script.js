@@ -1,5 +1,23 @@
 const API_KEY = "T4GJRJL4DW4FV6R2L5GK9CERE";
 
+const searchForm = document.querySelector("form");
+searchForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!searchForm.checkValidity())
+    {
+        searchForm.reportValidity();
+        return;
+    }
+
+    const location = document.querySelector("#location").value;
+
+    const weatherData = await fetchWeatherData(location);
+    const processedWeatherData = processWeatherData(weatherData);
+
+    console.log(processedWeatherData);
+});
+
 class Forecast {
     constructor(address, currentTemp, conditions, tempHi, tempLo) {
         this.address = address;
