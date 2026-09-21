@@ -14,6 +14,15 @@ searchForm.addEventListener("submit", async (event) => {
 
     const weatherData = await fetchWeatherData(location);
     const processedWeatherData = processWeatherData(weatherData);
+    const toggleScaleButton = document.querySelector("#toggle-scale");
+    if (toggleScaleButton.hidden)
+    {
+        toggleScaleButton.hidden = false;
+    }
+    toggleScaleButton.addEventListener("click", () => {
+        Forecast.convert(processedWeatherData);
+        displayProcessedWeatherData(processedWeatherData);
+    });
     displayProcessedWeatherData(processedWeatherData);
 });
 
@@ -23,6 +32,20 @@ class Forecast {
         this.currentTemp = currentTemp;
         this.feelsLike = feelsLike;
         this.conditions = conditions;
+        this.currentScale = "F";
+    }
+
+    static convert(data)
+    {
+        if (data.currentScale === "F") {
+            data.currentTemp = Math.round(((data.currentTemp - 32) * 5 / 9) * 10) / 10;
+            data.feelsLike = Math.round(((data.feelsLike - 32) * 5 / 9) * 10) / 10;
+        }
+        else {
+            data.currentTemp = Math.round(((data.currentTemp * 9 / 5) + 32) * 10) / 10;
+            data.feelsLike = Math.round(((data.feelsLike * 9 / 5) + 32) * 10) / 10;
+        }
+        data.currentScale = data.currentScale === "F" ? "C" : "F";        
     }
 }
 
@@ -63,4 +86,7 @@ function displayProcessedWeatherData(data) {
 
     const conditionsDisplay = document.querySelector("#conditions");
     conditionsDisplay.textContent = data.conditions;
+
+    const toggleScaleButton = document.querySelector("#toggle-scale");
+    toggleScaleButton.textContent = data.currentScale;
 }
