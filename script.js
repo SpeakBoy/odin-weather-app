@@ -14,17 +14,15 @@ searchForm.addEventListener("submit", async (event) => {
 
     const weatherData = await fetchWeatherData(location);
     const processedWeatherData = processWeatherData(weatherData);
-
-    console.log(processedWeatherData);
+    displayProcessedWeatherData(processedWeatherData);
 });
 
 class Forecast {
-    constructor(address, currentTemp, conditions, tempHi, tempLo) {
+    constructor(address, currentTemp, feelsLike, conditions) {
         this.address = address;
         this.currentTemp = currentTemp;
+        this.feelsLike = feelsLike;
         this.conditions = conditions;
-        this.tempHi = tempHi;
-        this.tempLo = tempLo;
     }
 }
 
@@ -47,9 +45,22 @@ async function fetchWeatherData(location) {
 function processWeatherData(data) {
     const address = data.address;
     const currentTemp = data.currentConditions.temp;
+    const feelsLike = data.currentConditions.feelslike;
     const conditions = data.currentConditions.conditions;
-    const tempHi = data.days[0].tempmax;
-    const tempLo = data.days[0].tempmin;
 
-    return new Forecast(address, currentTemp, conditions, tempHi, tempLo);
+    return new Forecast(address, currentTemp, feelsLike, conditions);
+}
+
+function displayProcessedWeatherData(data) {
+    const addressDisplay = document.querySelector("#address");
+    addressDisplay.textContent = data.address;
+
+    const currentTempDisplay = document.querySelector("#current-temp");
+    currentTempDisplay.textContent = `${data.currentTemp}°`;
+
+    const feelsLikeDisplay = document.querySelector("#feels-like");
+    feelsLikeDisplay.textContent = `Feels Like: ${data.feelsLike}°`;
+
+    const conditionsDisplay = document.querySelector("#conditions");
+    conditionsDisplay.textContent = data.conditions;
 }
