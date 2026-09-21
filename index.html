@@ -8,18 +8,19 @@
 </head>
 <body>
     <h1>Weather App</h1>
-    <div>
-        <p id="address"></p>
-        <p id="current-temp"><p>
-        <p id="feels-like"></p>
-        <p id="conditions"></p>
-        <img id="icon">
-        <button id="toggle-scale" hidden></button>
-    </div>
     <form>
         <label for="location">Location:</label>
         <input type="search" id="location" name="location" minlength="5">
         <button type="submit">Search</button>
     </form>
+    <div id="weather-data">
+        <p id="address"></p>
+        <p id="current-temp"><p>
+        <p id="feels-like"></p>
+        <img id="icon">
+        <p id="conditions"></p>
+        <button id="toggle-scale"></button>
+    </div>
+
 </body>
 </html>

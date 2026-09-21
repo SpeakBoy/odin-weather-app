@@ -14,11 +14,9 @@ searchForm.addEventListener("submit", async (event) => {
 
     const weatherData = await fetchWeatherData(location);
     const processedWeatherData = processWeatherData(weatherData);
+    const weatherDataDisplayDiv = document.querySelector("#weather-data");
+    weatherDataDisplayDiv.style.display = "flex";
     const toggleScaleButton = document.querySelector("#toggle-scale");
-    if (toggleScaleButton.hidden)
-    {
-        toggleScaleButton.hidden = false;
-    }
     toggleScaleButton.addEventListener("click", () => {
         Forecast.convert(processedWeatherData);
         displayProcessedWeatherData(processedWeatherData);
@@ -33,12 +31,12 @@ class Forecast {
         this.feelsLike = feelsLike;
         this.conditions = conditions;
         this.icon = icon;
-        this.currentScale = "F";
+        this.currentScale = "°F";
     }
 
     static convert(data)
     {
-        if (data.currentScale === "F") {
+        if (data.currentScale === "°F") {
             data.currentTemp = Math.round(((data.currentTemp - 32) * 5 / 9) * 10) / 10;
             data.feelsLike = Math.round(((data.feelsLike - 32) * 5 / 9) * 10) / 10;
         }
@@ -46,7 +44,7 @@ class Forecast {
             data.currentTemp = Math.round(((data.currentTemp * 9 / 5) + 32) * 10) / 10;
             data.feelsLike = Math.round(((data.feelsLike * 9 / 5) + 32) * 10) / 10;
         }
-        data.currentScale = data.currentScale === "F" ? "C" : "F";        
+        data.currentScale = data.currentScale === "°F" ? "°C" : "°F";        
     }
 }
 
