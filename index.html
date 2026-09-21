@@ -7,17 +7,18 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Weather</h1>
+    <h1>Weather App</h1>
     <div>
         <p id="address"></p>
         <p id="current-temp"><p>
         <p id="feels-like"></p>
         <p id="conditions"></p>
+        <img id="icon">
         <button id="toggle-scale" hidden></button>
     </div>
     <form>
         <label for="location">Location:</label>
-        <input type="search" id="location" name="location">
+        <input type="search" id="location" name="location" minlength="5">
         <button type="submit">Search</button>
     </form>
 </body>

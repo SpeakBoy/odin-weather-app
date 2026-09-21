@@ -27,11 +27,12 @@ searchForm.addEventListener("submit", async (event) => {
 });
 
 class Forecast {
-    constructor(address, currentTemp, feelsLike, conditions) {
+    constructor(address, currentTemp, feelsLike, conditions, icon) {
         this.address = address;
         this.currentTemp = currentTemp;
         this.feelsLike = feelsLike;
         this.conditions = conditions;
+        this.icon = icon;
         this.currentScale = "F";
     }
 
@@ -70,8 +71,9 @@ function processWeatherData(data) {
     const currentTemp = data.currentConditions.temp;
     const feelsLike = data.currentConditions.feelslike;
     const conditions = data.currentConditions.conditions;
+    const icon = data.currentConditions.icon;
 
-    return new Forecast(address, currentTemp, feelsLike, conditions);
+    return new Forecast(address, currentTemp, feelsLike, conditions, icon);
 }
 
 function displayProcessedWeatherData(data) {
@@ -86,6 +88,9 @@ function displayProcessedWeatherData(data) {
 
     const conditionsDisplay = document.querySelector("#conditions");
     conditionsDisplay.textContent = data.conditions;
+
+    const weatherIconDisplay = document.querySelector("#icon");
+    weatherIconDisplay.src = `./icons/${data.icon}.svg`;
 
     const toggleScaleButton = document.querySelector("#toggle-scale");
     toggleScaleButton.textContent = data.currentScale;
